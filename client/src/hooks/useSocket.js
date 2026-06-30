@@ -1,9 +1,8 @@
 import { useEffect, useRef, useCallback } from 'react';
 import { io } from 'socket.io-client';
 
-// Dynamically construct server URL using the same hostname/IP/protocol the page was loaded from
-// Works for: local (http://192.168.x.x:5000) and DevTunnel (https://tunnel-url:5000)
-const SERVER_URL = `${window.location.protocol}//${window.location.hostname}:5000`;
+// Get server URL from environment variable, or construct dynamically
+const SERVER_URL = import.meta.env.VITE_SERVER_URL || `${window.location.protocol}//${window.location.hostname}:5000`;
 
 // One socket per browser context (tab/window)
 let socketInstance = null;
