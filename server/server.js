@@ -9,18 +9,19 @@ const { v4: uuidv4 } = require('uuid');
 // IMPORTANT: Replace this with your actual Google OAuth 2.0 Client ID
 // Get it from: https://console.cloud.google.com/apis/credentials
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID || '61953097945-qovq5k9vqmqgumkem6qm58i3ku8q6jdv.apps.googleusercontent.com';
-const PORT = process.env.PORT || 5000;
-const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || 'http://localhost:5173';
+const PORT = Number(process.env.PORT) || 5000;
+const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || 'http://localhost:5173,http://127.0.0.1:5173';
+const allowedOrigins = CLIENT_ORIGIN.split(',').map((origin) => origin.trim()).filter(Boolean);
 
 // ─── App Setup ───────────────────────────────────────────────────────────────
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
-  cors: { origin: '*', methods: ['GET', 'POST'] },
+  cors: { origin: allowedOrigins, methods: ['GET', 'POST'] },
 });
 const googleClient = new OAuth2Client(GOOGLE_CLIENT_ID);
 
-app.use(cors({ origin: '*' }));
+app.use(cors({ origin: allowedOrigins }));
 app.use(express.json());
 
 // ─── In-Memory User Store ────────────────────────────────────────────────────
@@ -193,4 +194,12 @@ server.listen(PORT, '0.0.0.0', () => {
   console.log(`   Accessible on network at: http://[your-ip]:${PORT}`);
   console.log(`   Client origin: ${CLIENT_ORIGIN}`);
   console.log(`   Google Client ID: ${GOOGLE_CLIENT_ID.substring(0, 20)}...`);
+}).on('error', (err) => {
+  if (err.code === 'EADDRINUSE') {
+    console.error(`❌ Port ${PORT} is already in use. Stop the other process or start the server on a different port.`);
+    process.exit(1);
+  } else {
+    console.error('❌ Server failed to start:', err.message);
+    process.exit(1);
+  }
 });

@@ -1,8 +1,26 @@
 import { useEffect, useRef, useCallback } from 'react';
 import { io } from 'socket.io-client';
 
-// Get server URL from environment variable, or construct dynamically
-const SERVER_URL = import.meta.env.VITE_SERVER_URL || `${window.location.protocol}//${window.location.hostname}:5000`;
+function getServerUrl() {
+  const configuredUrl =
+    import.meta.env.VITE_SERVER_URL ||
+    import.meta.env.VITE_SOCKET_URL ||
+    import.meta.env.VITE_API_URL ||
+    '';
+
+  if (configuredUrl) {
+    return configuredUrl.replace(/\/$/, '');
+  }
+
+  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    return `${window.location.protocol}//${window.location.hostname}:5000`;
+  }
+
+  console.warn('[Socket] No backend URL configured. Set VITE_SERVER_URL to your deployed Socket.IO server URL so online users can be seen across devices.');
+  return window.location.origin;
+}
+
+const SERVER_URL = getServerUrl();
 
 // One socket per browser context (tab/window)
 let socketInstance = null;
