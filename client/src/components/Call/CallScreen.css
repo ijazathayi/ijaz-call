@@ -1,0 +1,156 @@
+/* ── Call Screen ── */
+.call-screen {
+  position: relative;
+  width: 100vw; height: 100vh; height: 100dvh;
+  overflow: hidden;
+  display: flex; flex-direction: column;
+  background: var(--bg-base);
+  animation: fadeIn 0.3s ease;
+}
+
+/* Background blur */
+.call-bg-video {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  filter: blur(40px) brightness(0.3) saturate(1.5);
+  transform: scale(1.1);
+  pointer-events: none; z-index: 0;
+}
+.call-bg-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, rgba(7,11,20,0.6) 0%, rgba(7,11,20,0.2) 40%, rgba(7,11,20,0.4) 70%, rgba(7,11,20,0.95) 100%);
+  z-index: 1;
+}
+
+/* Remote area */
+.call-remote-area {
+  position: relative; z-index: 2;
+  flex: 1;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+}
+.call-remote-video {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover; z-index: 0;
+}
+
+/* Avatar hero */
+.call-avatar-hero {
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+  width: 180px; height: 180px;
+  margin-bottom: 8px;
+}
+.call-avatar-rings { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; }
+.call-ring {
+  position: absolute; border-radius: 50%;
+  border: 2px solid rgba(124,58,237,0.3);
+  animation: pulse-ring 2.5s ease-out infinite;
+}
+.call-ring-1 { width:110px; height:110px; animation-delay:0s; }
+.call-ring-2 { width:150px; height:150px; animation-delay:0.8s; }
+.call-ring-3 { width:180px; height:180px; animation-delay:1.6s; }
+.call-hero-avatar {
+  width: 90px !important; height: 90px !important;
+  font-size: 30px !important;
+  border: 4px solid rgba(124,58,237,0.6) !important;
+  box-shadow: 0 0 40px rgba(124,58,237,0.4), var(--shadow-lg);
+  z-index: 1; position: relative;
+}
+
+/* Remote info */
+.call-remote-info {
+  position: relative; z-index: 3;
+  display: flex; flex-direction: column;
+  align-items: center; gap: 5px;
+  text-align: center; padding: 16px 20px;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.8);
+}
+.call-remote-name  { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; color: #fff; }
+.call-remote-email { font-size: 13px; color: rgba(255,255,255,0.55); }
+.call-status-text  { font-size: 13px; color: rgba(255,255,255,0.55); margin-top: 2px; }
+
+/* Connecting dots */
+.call-connecting { display:flex; align-items:center; gap:4px; }
+.call-connecting-dot {
+  display:inline-block; width:6px; height:6px;
+  border-radius:50%; background:rgba(255,255,255,0.6);
+  animation: blink 1.4s ease-in-out infinite;
+}
+
+/* PiP */
+.call-pip {
+  position: absolute; top:72px; right:16px;
+  width: 160px; height: 110px;
+  border-radius: var(--radius-lg); overflow: hidden;
+  border: 2px solid rgba(255,255,255,0.12);
+  box-shadow: var(--shadow-lg);
+  z-index: 10; cursor: move;
+  animation: scaleIn 0.3s ease;
+}
+.call-pip-video { width:100%; height:100%; object-fit:cover; transform:scaleX(-1); }
+.call-pip-off {
+  width:100%; height:100%;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:5px; background:rgba(0,0,0,0.6);
+  font-size:11px; color:rgba(255,255,255,0.5);
+}
+.call-pip-label {
+  position:absolute; bottom:5px; left:7px;
+  font-size:10px; font-weight:700;
+  color:rgba(255,255,255,0.7);
+  text-shadow:0 1px 4px rgba(0,0,0,0.8); letter-spacing:0.5px;
+}
+
+/* Top bar */
+.call-top-bar {
+  position: absolute; top:0; left:0; right:0; z-index:20;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 18px;
+  background: linear-gradient(to bottom, rgba(7,11,20,0.8), transparent);
+}
+.call-top-brand { display:flex; align-items:center; gap:8px; font-size:13px; font-weight:700; color:rgba(255,255,255,0.7); }
+.call-timer {
+  font-size:14px; font-weight:700; color:rgba(255,255,255,0.85);
+  font-variant-numeric:tabular-nums; letter-spacing:1px;
+  background:rgba(0,0,0,0.35); padding:4px 12px;
+  border-radius:var(--radius-full); border:1px solid rgba(255,255,255,0.1);
+}
+
+/* Controls */
+.call-controls-wrap {
+  position: absolute; bottom:28px; left:50%; transform:translateX(-50%);
+  z-index: 20;
+  animation: slideUp 0.4s ease;
+}
+.call-controls {
+  display: flex; align-items: center; gap:8px;
+  padding: 12px 18px;
+  border-radius: var(--radius-full);
+  box-shadow: var(--shadow-lg);
+}
+.call-ctrl-btn {
+  width:48px !important; height:48px !important; font-size:19px !important;
+  background:rgba(255,255,255,0.08) !important;
+  border:1px solid rgba(255,255,255,0.1) !important;
+  color:#fff !important;
+  transition:all var(--transition) !important;
+}
+.call-ctrl-btn:hover { background:rgba(255,255,255,0.15) !important; transform:scale(1.05); }
+.call-ctrl-btn-off   { background:rgba(255,255,255,0.04) !important; color:rgba(255,255,255,0.35) !important; border-color:rgba(255,255,255,0.06) !important; }
+.call-ctrl-btn-recording { background:rgba(239,68,68,0.2) !important; border-color:rgba(239,68,68,0.4) !important; color:#f87171 !important; animation:pulse-glow 1.5s ease-in-out infinite !important; }
+.call-ctrl-divider { width:1px; height:30px; background:rgba(255,255,255,0.1); margin:0 2px; }
+.call-ctrl-end { width:56px !important; height:56px !important; font-size:21px !important; }
+
+/* Mobile */
+@media (max-width: 480px) {
+  .call-pip    { width:120px; height:84px; top:60px; right:12px; }
+  .call-controls { gap:6px; padding:10px 14px; }
+  .call-ctrl-btn { width:42px !important; height:42px !important; font-size:17px !important; }
+  .call-ctrl-end { width:50px !important; height:50px !important; }
+  .call-remote-name { font-size:22px; }
+  .call-controls-wrap { bottom:20px; width:calc(100% - 32px); }
+  .call-controls { justify-content:center; }
+}

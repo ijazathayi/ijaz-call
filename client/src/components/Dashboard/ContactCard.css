@@ -1,0 +1,70 @@
+/* ── Contact Card ── */
+.contact-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  cursor: default;
+  transition: all var(--transition);
+  border: 1px solid transparent;
+  animation: fadeIn 0.2s ease;
+}
+.contact-card:hover { background: var(--bg-glass-hover); border-color: var(--border); }
+.contact-card.offline { opacity: 0.55; }
+
+/* Avatar */
+.contact-avatar-wrap { position: relative; flex-shrink: 0; }
+.contact-avatar {
+  width: 44px !important; height: 44px !important;
+  border: 2px solid rgba(255,255,255,0.06);
+}
+.contact-avatar-wrap .status-dot {
+  position: absolute;
+  bottom: 0; right: 0;
+  width: 11px; height: 11px;
+  border-width: 2px;
+}
+
+/* Info */
+.contact-info {
+  flex: 1; min-width: 0;
+  display: flex; flex-direction: column; gap: 2px;
+}
+.contact-name {
+  font-size: 13px; font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.contact-email {
+  font-size: 11px; color: var(--text-muted);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.contact-status-text { font-size: 10px; color: var(--green); font-weight: 600; }
+
+/* Call buttons */
+.contact-actions {
+  display: flex;
+  gap: 6px;
+  opacity: 0;
+  transform: translateX(8px);
+  transition: all var(--transition);
+  flex-shrink: 0;
+}
+.contact-actions.visible { opacity: 1; transform: translateX(0); }
+.contact-call-btn { width: 34px !important; height: 34px !important; font-size: 14px !important; }
+
+/* Offline badge */
+.contact-offline-badge {
+  font-size: 10px; font-weight: 600;
+  color: var(--text-muted);
+  background: rgba(255,255,255,0.05);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+/* Mobile: always show call buttons */
+@media (max-width: 768px) {
+  .contact-actions { opacity: 1; transform: none; }
+}
